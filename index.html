@@ -1,193 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dhurba KC Portfolio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dhurba KC — Portfolio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    :root {
+      --bg: #f5f5f3;
+      --surface: #ffffff;
+      --border: rgba(0,0,0,0.1);
+      --text: #111;
+      --muted: #666;
+      --hint: #999;
+      --accent: #1a1a1a;
+      --info: #185fa5;
+      --info-bg: #e6f1fb;
+      --info-text: #0c447c;
+      --warning-bg: #faeeda;
+      --warning-text: #854f0b;
+      --radius-md: 8px;
+      --radius-lg: 14px;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f6f8;
-            color: #222;
-            line-height: 1.6;
-        }
+    body {
+      font-family: system-ui, -apple-system, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.25rem; }
 
-        .hero {
-            background: white;
-            padding: 35px;
-            border-radius: 14px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-            margin-bottom: 30px;
-        }
+    /* Hero */
+    .hero {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.25rem;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
 
-        .hero h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.3rem;
-            color: #1f2937;
-        }
+    .avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--info-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 500;
+      color: var(--info-text);
+      flex-shrink: 0;
+    }
 
-        .hero p {
-            margin: 0;
-            font-size: 1.05rem;
-            color: #555;
-        }
+    .hero-text h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+    .hero-text .sub { font-size: 14px; color: var(--muted); }
 
-        h2 {
-            margin-top: 0;
-            margin-bottom: 18px;
-            font-size: 1.6rem;
-            color: #1f2937;
-        }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+    .tag {
+      font-size: 12px; padding: 3px 10px;
+      border-radius: var(--radius-md);
+      background: #f0efeb;
+      border: 0.5px solid var(--border);
+      color: var(--muted);
+    }
 
-        .section {
-            margin-bottom: 35px;
-        }
+    .btn {
+      display: inline-block; margin-top: 14px;
+      padding: 8px 16px;
+      background: var(--text); color: #fff;
+      border-radius: var(--radius-md);
+      text-decoration: none; font-size: 13px; font-weight: 500;
+    }
+    .btn:hover { opacity: 0.85; }
 
-        .card {
-            background: white;
-            padding: 22px;
-            margin-bottom: 20px;
-            border-radius: 14px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
+    /* Section label */
+    .section-label {
+      font-size: 11px; font-weight: 500;
+      color: var(--hint); letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
-        }
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+    }
 
-        .card h3 {
-            margin-top: 0;
-            margin-bottom: 12px;
-            color: #111827;
-        }
+    .card h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+    .card p  { font-size: 13px; color: var(--muted); }
 
-        .card p {
-            margin-bottom: 0;
-            color: #4b5563;
-        }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
 
-        .image-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin: 15px 0;
-        }
+    /* Project cards */
+    .project-card {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+    }
+    .badge {
+      display: inline-block; font-size: 11px;
+      padding: 2px 8px; border-radius: var(--radius-md);
+      background: var(--warning-bg); color: var(--warning-text);
+      margin-bottom: 10px;
+    }
+    .project-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+    .project-card p  { font-size: 13px; color: var(--muted); }
 
-        .image-row img {
-            width: 100%;
-            max-width: 300px;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-        }
+    .tool-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .tool {
+      font-size: 11px; padding: 3px 8px;
+      border-radius: var(--radius-md);
+      background: #f0efeb; border: 0.5px solid var(--border);
+      color: var(--muted);
+    }
 
-        .contact {
-            background: white;
-            padding: 22px;
-            border-radius: 14px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-        }
+    /* Skills */
+    .skill-bar-wrap { margin-bottom: 12px; }
+    .skill-label {
+      display: flex; justify-content: space-between;
+      font-size: 13px; color: var(--muted); margin-bottom: 5px;
+    }
+    .skill-track {
+      height: 6px; background: #f0efeb;
+      border-radius: 99px; overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%; border-radius: 99px;
+      background: var(--text);
+    }
 
-        .contact a {
-            color: #2563eb;
-            text-decoration: none;
-        }
+    /* Contact */
+    .contact-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 0;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 13px;
+    }
+    .contact-row:last-child { border-bottom: none; }
+    .contact-label { color: var(--muted); width: 64px; flex-shrink: 0; }
+    .contact-val a { color: var(--info); text-decoration: none; }
+    .contact-val a:hover { text-decoration: underline; }
 
-        .contact a:hover {
-            text-decoration: underline;
-        }
+    /* Spacing helpers */
+    .mb { margin-bottom: 1.75rem; }
 
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 1.9rem;
-            }
-
-            .image-row {
-                flex-direction: column;
-            }
-
-            .image-row img {
-                max-width: 100%;
-                height: auto;
-            }
-        }
-        .button {
-    display: inline-block;
-    padding: 10px 16px;
-    background: #2563eb;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    margin-top: 15px;
-    font-weight: 500;
-}
-
-.button:hover {
-    background: #1e40af;
-}
-    </style>
+    @media (max-width: 540px) {
+      .hero { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
-
 <body>
-    <div class="container">
+<div class="wrap">
 
-        <div class="hero">
-            <h1>Dhurba KC</h1>
-            <p>Mechanical Engineering Student | Aspiring AI Engineer</p>
-           <a href="files/4342-001 FINAL PROJECT REPORT.pdf" target="_blank" class="button">
-    GEARBOX DESIGN PROJECT 
-</a>
-        </div>
-
-        <div class="section">
-            <h2>Ongoing Projects</h2>
-
-            <div class="card">
-                <h3>C-Clamp Stress Analysis</h3>
-                <p>
-                    Performing stress analysis using ANSYS to identify critical stress regions
-                    and evaluate structural performance under loading.
-                </p>
-            </div>
-
-            <div class="card">
-                <h3>Bicycle and Hand Dynamometers</h3>
-
-                <div class="image-row">
-                    <img src="images/bike_dyno.jpeg" alt="Bicycle dynamometer setup">
-                    <img src="images/hand_dyno1.jpg" alt="Hand dynamometer setup 1">
-                    <img src="images/hand_dyno2.jpg" alt="Hand dynamometer setup 2">
-                </div>
-
-                <p>
-                    Human performance measurement using bicycle and hand dynamometers for force,
-                    velocity, and power analysis.
-                </p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Contact</h2>
-            <div class="contact">
-                <p>Email: <a href="mailto:dhurbakc37@gmail.com">dhurbakc37@gmail.com</a></p>
-            </div>
-        </div>
-
+  <!-- Hero -->
+  <div class="hero">
+    <div class="avatar">DK</div>
+    <div class="hero-text">
+      <h1>Dhurba KC</h1>
+      <p class="sub">Mechanical Engineering Student &mdash; aspiring AI engineer</p>
+      <div class="tags">
+        <span class="tag">ANSYS</span>
+        <span class="tag">CAD</span>
+        <span class="tag">FEA</span>
+        <span class="tag">Python</span>
+        <span class="tag">Machine Learning</span>
+      </div>
+      <a class="btn" href="files/4342-001 FINAL PROJECT REPORT.pdf" target="_blank">View gearbox project &rarr;</a>
     </div>
+  </div>
+
+  <!-- About -->
+  <p class="section-label">About</p>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Engineering background</h3>
+      <p>Focused on structural analysis, mechanical design, and human performance systems — applying simulation and testing tools to real engineering problems.</p>
+    </div>
+    <div class="card">
+      <h3>AI &amp; software interests</h3>
+      <p>Bridging mechanical engineering with AI — exploring machine learning applications in design optimization, simulation, and data-driven analysis.</p>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <p class="section-label">Ongoing Projects</p>
+
+  <div class="project-card">
+    <span class="badge">In progress</span>
+    <h3>C-Clamp stress analysis</h3>
+    <p>Performing structural simulation in ANSYS to identify critical stress concentrations and evaluate performance under variable loading conditions.</p>
+    <div class="tool-row">
+      <span class="tool">ANSYS</span>
+      <span class="tool">FEA</span>
+      <span class="tool">Structural analysis</span>
+    </div>
+  </div>
+
+  <div class="project-card mb">
+    <span class="badge">In progress</span>
+    <h3>Bicycle &amp; hand dynamometers</h3>
+    <p>Human performance measurement using bicycle and hand dynamometers to analyze force, velocity, and output power under controlled conditions.</p>
+    <div class="tool-row">
+      <span class="tool">Dynamometry</span>
+      <span class="tool">Data acquisition</span>
+      <span class="tool">Power analysis</span>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <p class="section-label">Skills</p>
+  <div class="card mb">
+    <div class="skill-bar-wrap">
+      <div class="skill-label"><span>ANSYS / FEA</span><span>Advanced</span></div>
+      <div class="skill-track"><div class="skill-fill" style="width:80%"></div></div>
+    </div>
+    <div class="skill-bar-wrap">
+      <div class="skill-label"><span>CAD (SolidWorks / Fusion 360)</span><span>Proficient</span></div>
+      <div class="skill-track"><div class="skill-fill" style="width:70%"></div></div>
+    </div>
+    <div class="skill-bar-wrap">
+      <div class="skill-label"><span>Python</span><span>Intermediate</span></div>
+      <div class="skill-track"><div class="skill-fill" style="width:55%"></div></div>
+    </div>
+    <div class="skill-bar-wrap" style="margin-bottom:0">
+      <div class="skill-label"><span>Machine learning</span><span>Learning</span></div>
+      <div class="skill-track"><div class="skill-fill" style="width:35%"></div></div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <p class="section-label">Contact</p>
+  <div class="card">
+    <div class="contact-row">
+      <span class="contact-label">Email</span>
+      <span class="contact-val"><a href="mailto:dhurbakc37@gmail.com">dhurbakc37@gmail.com</a></span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">GitHub</span>
+      <span class="contact-val"><a href="https://github.com/dhurbakc" target="_blank">github.com/dhurbakc</a></span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">LinkedIn</span>
+      <span class="contact-val"><a href="https://linkedin.com/in/dhurbakc" target="_blank">linkedin.com/in/dhurbakc</a></span>
+    </div>
+  </div>
+
+</div>
 </body>
 </html>
